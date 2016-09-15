@@ -11,7 +11,20 @@
 |
 */
 
-Route::get ('/','LoginController@Index');
+Route::get('/', function () {
+    return redirect('/login');
+});
+
+Route::get ('/login','LoginController@Index');
+Route::post('/login','LoginController@Index');
+
+Route::get ('/inicio','LoginController@Init');
+
+
+
+
+
+Route::get('/logout','LoginController@Logout');
 
 /*
 
