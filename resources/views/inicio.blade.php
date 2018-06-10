@@ -1,38 +1,86 @@
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <meta name="language" content="en"/>
+@extends('layout.master')
 
-    <link rel="shortcut icon" href="{!! asset('images/favicon.ico')!!}" type="image/x-icon">
-    <link rel="icon" href="{!! asset('images/favicon.ico')!!}" type="image/x-icon">
-
-    <title>
-        Iglesia Smirna | {!! $tituloPagina !!}
-    </title>
-
-    <style>
-        .formulario {
-            text-align: center;
-            display: table-cell;
-            vertical-align: middle;
-        }
-    </style>
-
-    @section('css')
-        @include('layout.style')
-    @show
-</head>
-
-<body class="nav-md" >
-    <div class="container body">
-        <a href="{!! url('/logout') !!}">
-            Cerrar Sesi&oacute;n
-        </a>
+@section('contenido')
+    <div class="row" style="background: white;">
+        <br>
+        <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
+            <h3>Asamblea de Dios Smirna</h3>
+            <h4>4a. Av. 1-02 Zona 1. Chimaltenango, Guatemala.</h4>
+            <hr>
+        </div>
+        <div class="col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1 col-xs-10 col-xs-offset-1" id="index-vision">
+            <h3>Nuestra visi&oacute;n</h3>
+            <h4>Alcanzar y desarrollar personas por medio del mensaje del evangelio para ensanchar el Reino de Dios.</h4>
+        </div>
+        <div class="col-md-5 col-sm-5 col-xs-10 col-xs-offset-1">
+            <h3>Misi&oacute;n</h3>
+            <h4>Nuestra misi&oacuten se describe en un proceso de cinco pasos:</h4>
+        </div>
     </div>
-</body>
-</html>
+    <br><br>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                    <li data-target="#myCarousel" data-slide-to="3"></li>
+                    <li data-target="#myCarousel" data-slide-to="4"></li>
+                </ol>
 
-@include('layout.script')
-@section('js')
-@show
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        @if(isset($eng)&&$eng)
+                            {!! Html::image('images/carrousel01.jpg', 'Alcanzar') !!}
+                        @else
+                            {!! Html::image('images/carrusel01.jpg', 'Alcanzar') !!}
+                        @endif
+
+                    </div>
+                    <div class="item">
+                        @if(isset($eng)&&$eng)
+                            {!! Html::image('images/carrousel02.jpg', 'Consolidar') !!}
+                        @else
+                            {!! Html::image('images/carrusel02.jpg', 'Consolidar') !!}
+                        @endif
+
+                    </div>
+                    <div class="item">
+                        @if(isset($eng)&&$eng)
+                            {!! Html::image('images/carrousel03.jpg', 'Discipular') !!}
+                        @else
+                            {!! Html::image('images/carrusel03.jpg', 'Discipular') !!}
+                        @endif
+
+                    </div>
+                    <div class="item">
+                        @if(isset($eng)&&$eng)
+                            {!! Html::image('images/carrousel04.jpg', 'Desarrollar') !!}
+                        @else
+                            {!! Html::image('images/carrusel04.jpg', 'Desarrollar') !!}
+                        @endif
+
+                    </div>
+                    <div class="item">
+                        @if(isset($eng)&&$eng)
+                            {!! Html::image('images/carrousel05.jpg', 'Enviar') !!}
+                        @else
+                            {!! Html::image('images/carrusel05.jpg', 'Enviar') !!}
+                        @endif
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+@stop
+
+<script>
+    $(document).ready(function(){
+        $('.carousel').carousel();
+    });
+</script>
