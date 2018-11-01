@@ -25,12 +25,27 @@ Route::group(['middleware' => ['sesion']], function () {
     {
         Route::group(['prefix' => 'sistema'], function()
         {
-
+            Route::get ('modulo','SistemaController@InitModulo');
         });
 
         Route::group(['prefix' => 'usuario'], function()
         {
             Route::get ('/listar','UsuarioController@InitListar');
+            Route::post('/accion','UsuarioController@InitAccion');
+            Route::post('/permisos','UsuarioController@InitPermisos');
+            Route::post('/saveAccess','UsuarioController@InitSaveAccess');
+        });
+    });
+
+    Route::group(['prefix' => 'miembros','namespace' => 'Modulos\Miembros'], function()
+    {
+        Route::group(['prefix' => 'gestion'], function()
+        {
+            Route::get ('/agregar','GestionController@InitAgregar');
+            Route::post('/agregar','GestionController@InitAgregar');
+
+            Route::get ('/listar','GestionController@InitListar');
+            Route::post('/listar','GestionController@InitListar');
         });
     });
 
@@ -48,7 +63,7 @@ Route::group(['middleware' => ['sesion']], function () {
         Route::group(['prefix' => 'estadisticas'], function()
         {
             Route::get ('total-diaconos','EstadisticaController@InitResultadosDiaconos');
-            Route::get ('resumen-diaconos','EstadisticaController@InitResumenDiaconos');
+            Route::get ('resumen','EstadisticaController@InitResumenDiaconos');
 
             Route::get ('real-time','EstadisticaController@InitRealTime');
         });

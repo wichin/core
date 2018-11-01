@@ -33,19 +33,27 @@ class EstadisticaController extends Controller
 
         $tablaTotales = $this->ObtenerTabla($resultado);
 
-        return view('modulos.estadisticas.resultadoDiaconos', get_defined_vars());
+        return view('modulos.elecciones.diaconos.resultadoDiaconos', get_defined_vars());
     }
 
     public function ObtenerTotalesDiaconos()
     {
-        return DB::table('e_eleccion as e')
+        return DB::table('tb_eleccion as el')->where('el.id_organizacion',2)
+            ->join('tb_planilla as pl','pl.id_eleccion','=','el.id')
+            ->join('tb_candidato as c','c.id_planilla','=','pl.id')
+            ->join('tb_persona as p','p.id','=','c.id_persona')
+            ->select('p.nombre','p.apellido','c.votos')
+            ->orderBy('c.votos','desc')
+            ->get();
+
+        /*return DB::table('e_eleccion as e')
             ->join('e_candidato as c', 'c.id_eleccion', '=', 'e.id')
             ->join('persona as p', 'p.id', '=', 'c.id_persona')
             ->where('e.estado', 1)
             ->where('c.estado', 1)
             ->select('p.nombre', 'p.apellido', 'c.votos')
             ->orderBy('c.votos', 'desc')
-            ->get();
+            ->get();*/
     }
 
     public function ObtenerTop5Diaconos($data)
@@ -114,11 +122,11 @@ class EstadisticaController extends Controller
 
     public function ObtenerConteoDigitadores()
     {
-        return DB::table('e_bitacora as b')
-            ->join('e_eleccion as e','e.id','=','b.id_eleccion')
-            ->join('usuario as u','u.id','=','b.id_usuario')
-            ->join('persona as p','p.id','=','u.id_persona')
-            ->where('e.estado',1)
+        return DB::table('bit_elecciones as b')
+            ->join('tb_eleccion as e','e.id','=','b.id_eleccion')
+            ->join('tb_usuario as u','u.id','=','b.id_usuario')
+            ->join('tb_persona as p','p.id','=','u.id_persona')
+            ->where('e.id_estado',1)
             ->select('u.id','p.nombre','p.apellido',DB::raw('count(*) as conteo'))
             ->groupBy('u.id','p.nombre','p.apellido')
             ->get();

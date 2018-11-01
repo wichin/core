@@ -272,6 +272,9 @@
 @stop
 
 @section('js')
+    {!! Html::style('vendors/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.css') !!}
+    {!! Html::script('vendors/DataTables/DataTables-1.10.16/js/dataTables.bootstrap.js') !!}
+
     {!! Html::script('vendors/fastclick/lib/fastclick.js') !!}
     {!! Html::script('vendors/nprogress/nprogress.js') !!}
     {!! Html::script('vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js') !!}

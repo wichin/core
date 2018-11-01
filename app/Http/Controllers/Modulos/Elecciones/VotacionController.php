@@ -55,14 +55,12 @@ class VotacionController extends Controller {
             return redirect(url('/elecciones/votacion/diaconos'));
         }
 
-        $query = DB::table('e_eleccion as e')
-            ->join('organizacion as o','o.id','=','e.id_organizacion')
-            ->join('e_candidato as c','c.id_eleccion','=','e.id')
-            ->join('persona as p','p.id','=','c.id_persona')
-            ->where('o.id',1)       # id 1 = Cuerpo Oficial
-            ->where('e.estado',1)
-            ->where('c.estado',1)
-            ->select('c.id as idCandidato','p.nombre','p.apellido','p.url_foto as foto')
+        #ORGANIZACION DIACONOS ID->2
+        $query = DB::table('tb_eleccion as el')->where('el.id_organizacion',2)->where('el.id_estado',1)
+            ->join('tb_planilla as pl','pl.id_eleccion','=','el.id')
+            ->join('tb_candidato as c','c.id_planilla','=','pl.id')
+            ->join('tb_persona as p','p.id','=','c.id_persona')
+            ->select('c.id as id_candidato','p.nombre','p.apellido','p.url_foto','el.id as id_eleccion')
             ->orderBy('p.apellido','asc')
             ->orderBy('p.nombre','asc')
             ->get();
@@ -70,11 +68,14 @@ class VotacionController extends Controller {
         #dd($query);
 
         if(isset($query)&&count($query)>0)
+        {
+            $idEleccion = $query[0]->id_eleccion;
             $diaconos = collect($query)->chunk(3);
+        }
         else
             $diaconos = [];
 
-        return view('modulos.elecciones.votacionDiaconos',get_defined_vars());
+        return view('modulos.elecciones.diaconos.votacion',get_defined_vars());
 
     }
 
@@ -89,25 +90,29 @@ class VotacionController extends Controller {
         $dataCandidato  = explode('|',$data->data);
         $idEleccion     = $data->elec;
 
-        #dd($data->all(), $dataCandidato);
-
         DB::beginTransaction();
 
-        $insertBitacora = DB::table('E_BITACORA')->insert([
-            'id_usuario'    => $this->idUsuario,
-            'id_eleccion'   => $idEleccion
-        ]);
+        try
+        {
+            $insertBitacora = DB::table('bit_elecciones')->insert([
+                'id_usuario'    => $this->idUsuario,
+                'id_eleccion'   => $idEleccion
+            ]);
+        }
+        catch (\Exception $e)
+        {
+            $insertBitacora = false;
+        }
 
         if($insertBitacora)
         {
             $resultadoVotos = [];
-            $i=0;
+            $i = 0;
             foreach ($dataCandidato as $dt)
             {
                 if(isset($dt)&&$dt!='')
                 {
-                    $updateVoto = DB::table('E_CANDIDATO')->where('id',$dt)
-                        ->where('id_eleccion',$idEleccion)
+                    $updateVoto = DB::table('tb_candidato')->where('id',$dt)
                         ->increment('votos');
 
                     $resultadoVotos[$i] = $updateVoto?1:0;

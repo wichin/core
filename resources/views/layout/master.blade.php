@@ -3,6 +3,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta name="language" content="en"/>
+    <meta name="token" content="{{ csrf_token() }}">
 
     <link rel="shortcut icon" href="{!! asset('images/favicon.ico')!!}" type="image/x-icon">
     <link rel="icon" href="{!! asset('images/favicon.ico')!!}" type="image/x-icon">
@@ -15,7 +16,6 @@
     @section('css')
     @show
 </head>
-
 <body class="nav-md" >
 <div class="container body">
     <div class="main_container">
@@ -35,7 +35,7 @@
                 <div class="profile" style="margin-bottom: 200px;">
                     <div class="profile_pic">
                         @if(isset(Session::get('usuario')['foto']))
-                            <img src="{!! asset(Session::get('usuario')['foto']) !!}" alt="..." class="img-circle profile_img">
+                            <img src="{{ Session::get('usuario')['foto'] }}" alt="..." class="img-circle profile_img">
                         @else
                             <img src="{!! asset('images/silueta.png') !!}" alt="..." class="img-circle profile_img">
                         @endif
@@ -113,7 +113,7 @@
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                 @if(isset(Session::get('usuario')['foto']))
-                                    <img src="{!! asset(Session::get('usuario')['foto']) !!}" alt="...">
+                                    <img src="{{ Session::get('usuario')['foto'] }}" alt="...">
                                 @else
                                     <img src="{!! asset('images/silueta.png') !!}" alt="...">
                                 @endif
@@ -141,19 +141,17 @@
         <!-- page content-->
     </div>
 </div>
-</body>
-</html>
 
 @include('layout.script')
 <script>
     $(document).ready(function () {
-        @if(Session::has('mensaje'))
+                @if(Session::has('mensaje'))
         var notice = new PNotify({
-            title: '{{Session::get('mensaje')['titulo']}}',
-            text: '{{Session::get('mensaje')['msg']}}',
-            type: '{{Session::get('mensaje')['class']}}',
-            icon: false
-        });
+                title: '{{Session::get('mensaje')['titulo']}}',
+                text: '{{Session::get('mensaje')['msg']}}',
+                type: '{{Session::get('mensaje')['class']}}',
+                icon: false
+            });
         notice.get().click(function() {
             notice.remove();
         });
@@ -163,3 +161,6 @@
 </script>
 @section('js')
 @show
+</body>
+</html>
+

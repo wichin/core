@@ -79,8 +79,10 @@
     </div>
 @stop
 
+@section('js')
 <script>
     $(document).ready(function(){
         $('.carousel').carousel();
     });
 </script>
+@stop

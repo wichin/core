@@ -1046,6 +1046,9 @@ button.DTTT_button, div.DTTT_button, a.DTTT_button {
   background: #E7E7E7 !important;
   box-shadow: none !important; }
 
+table{
+  font-size: 13px !important;}
+
 table.jambo_table {
   border: 1px solid rgba(221, 221, 221, 0.78); }
 
