@@ -46,7 +46,8 @@ class MasterController extends Controller
 
     public function BtnHtml($accion, $tooltip, $icono)
     {
-        return '<a class="btn btn-primary "'.(isset($accion)?'onclick="'.$accion.'"':'').' '.(isset($tooltip)?'data-toggle="tooltip" data-placement="top" title="'.$tooltip.'"':'').'><i class="fa fa-'.(isset($icono)?$icono:'question').' fa-lg"></i></a>';
+        #return '<a class="btn btn-primary "'.(isset($accion)?'onclick="'.$accion.'"':'').' '.(isset($tooltip)?'data-toggle="tooltip" data-placement="top" title="'.$tooltip.'"':'').'><i class="fa fa-'.(isset($icono)?$icono:'question').' fa-lg"></i></a>';
+        return '<a '.(isset($accion)?'onclick="'.$accion.'"':'').' '.(isset($tooltip)?'data-toggle="tooltip" data-placement="top" title="'.$tooltip.'"':'').'><i class="fa fa-'.(isset($icono)?$icono:'question').' fa-2x"></i></a>';
     }
 
     public function RevertDate($date, $timeOut = false)
@@ -94,6 +95,4 @@ class MasterController extends Controller
 
         return $dateFormat;
     }
-
-
 }

@@ -21,3 +21,14 @@
 @endif
 
 {!! Html::style('build/css/custom.css') !!}
+
+{{--custom elements--}}
+<style>
+    .modal-header
+    {
+        background: #337AB7 !important;
+        color: white !important;
+        border-top-left-radius: 3px !important;
+        border-top-right-radius: 3px !important;
+    }
+</style>

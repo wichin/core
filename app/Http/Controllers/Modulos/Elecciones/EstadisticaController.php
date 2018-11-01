@@ -131,4 +131,5 @@ class EstadisticaController extends Controller
             ->groupBy('u.id','p.nombre','p.apellido')
             ->get();
     }
+
 }

@@ -26,6 +26,10 @@ Route::group(['middleware' => ['sesion']], function () {
         Route::group(['prefix' => 'sistema'], function()
         {
             Route::get ('modulo','SistemaController@InitModulo');
+            Route::post('modulo','SistemaController@InitModulo');
+            Route::post('accionModulo','SistemaController@InitAccionModulo');
+
+
         });
 
         Route::group(['prefix' => 'usuario'], function()
