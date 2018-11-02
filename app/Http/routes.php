@@ -29,11 +29,21 @@ Route::group(['middleware' => ['sesion']], function () {
             Route::post('modulo','SistemaController@InitModulo');
             Route::post('accionModulo','SistemaController@InitAccionModulo');
 
+            Route::get ('menu','SistemaController@InitMenu');
+            Route::post('menu','SistemaController@InitMenu');
+            Route::post('accionMenu','SistemaController@InitAccionMenu');
 
+            Route::get ('aplicacion','SistemaController@InitAplicacion');
+            Route::post('aplicacion','SistemaController@InitAplicacion');
+            Route::post('buscarMenu','SistemaController@InitBuscarMenu');
+            Route::post('accionAplicacion','SistemaController@InitAccionAplicacion');
         });
 
         Route::group(['prefix' => 'usuario'], function()
         {
+            Route::get ('/gestion','UsuarioController@InitGestion');
+            Route::post('/gestion','UsuarioController@InitGestion');
+
             Route::get ('/listar','UsuarioController@InitListar');
             Route::post('/accion','UsuarioController@InitAccion');
             Route::post('/permisos','UsuarioController@InitPermisos');
@@ -50,6 +60,8 @@ Route::group(['middleware' => ['sesion']], function () {
 
             Route::get ('/listar','GestionController@InitListar');
             Route::post('/listar','GestionController@InitListar');
+
+            Route::get ('/buscar','GestionController@InitBuscarPersona');
         });
     });
 

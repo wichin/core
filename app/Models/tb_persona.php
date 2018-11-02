@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class tb_persona extends Model
 {
@@ -11,7 +12,7 @@ class tb_persona extends Model
 
     public function PersonaEvento()
     {
-        return $this->hasMany('App\Models\tb_persona_evento','id_evento','id');
+        return $this->hasMany('App\Models\tb_persona_evento','id_persona','id');
     }
 
     public function PersonaMinisterio()
@@ -22,6 +23,11 @@ class tb_persona extends Model
     public function PersonaProceso()
     {
         return $this->hasMany('App\Models\tb_persona_proceso','id_persona','id');
+    }
+
+    public function Usuario()
+    {
+        return $this->hasMany('App\Models\tb_usuario','id_persona','id');
     }
 
     public function Sexo()
@@ -52,6 +58,22 @@ class tb_persona extends Model
             if(isset($idPersona))
                 $sql->where('id',$idPersona);
         })->with('Sexo','Grupo')->take(100)->get();
+    }
+
+    public function GetPersonaByNombre($cadena)
+    {
+        /*return $this->where(function ($sql) use($cadena){
+            $sql->where(DB::raw('UPPER(nombre)'),'like','%'.$cadena.'%');
+            $sql->orWhere(DB::raw('UPPER(apellido)'),'like','%'.$cadena.'%');
+        })->select('id','nombre','apellido')->get();*/
+
+        return DB::table('tb_persona as p')
+            ->leftJoin('tb_usuario as u','u.id_persona','=','p.id')
+            ->where(function ($sql) use($cadena){
+                $sql->where(DB::raw('UPPER(nombre)'),'like','%'.$cadena.'%');
+                $sql->orWhere(DB::raw('UPPER(apellido)'),'like','%'.$cadena.'%');
+            })->whereNull('u.id')
+            ->select('p.id','p.nombre','p.apellido')->get();
     }
 
     public function GetDetalle($idPersona)

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Modulos\MasterController;
 
 use App\Models\tb_modulo;
+use App\Models\tb_usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -11,7 +12,58 @@ class UsuarioController extends MasterController
 {
     public function InitGestion(Request $request)
     {
+        $usuario      = $this->usuario;
+        $tituloPagina = 'Usuario';
+        $titulo       = 'Usuarios de sistema';
+        $subtitulo    = '';
 
+        $catPerfil  = $this->GetCatalogo('cat_rol',1);
+
+        if($request->isMethod('POST'))
+        {
+            $Usuario = new tb_usuario();
+            $correo = $request->correo;
+            if(isset($correo)&&$correo!='')
+            {
+                $validaCorreo = $Usuario->ValidaCorreo($correo);
+
+                if(isset($validaCorreo))
+                {
+                    if(count($validaCorreo)==0)
+                    {
+                        $item   = explode(' ',$request->persona);
+                        $cadena = isset($item[0])&&$item[0]!=''?mb_strtolower($item[0]):'admin';
+                        $pass   = md5($cadena);
+
+                        $arrayUsuario = [
+                            'email'         => $correo,
+                            'password'      => $pass,
+                            'id_rol'        => $request->rol,
+                            'id_persona'    => $request->idPersona,
+                            'estado'        => 1
+                        ];
+
+                        if($Usuario->SetUsuario($arrayUsuario))
+                        {
+                            $info = ['titulo'=>'TRANSACCION EXITOSA','msg'=>'El usuario fue creado correctamente.','class'=>'info'];
+                        }
+                        else
+                            $info = ['titulo'=>'ERROR EN TRANSACCION','msg'=>'No fue posible registrar al nuevo Usuario.','class'=>'error'];
+                    }
+                    else
+                        $info = ['titulo'=>'ERROR EN TRANSACCION','msg'=>'El correo '.$correo.' ya se encuentra registrado en el sistema.','class'=>'error'];
+                }
+                else
+                    $info = ['titulo'=>'ERROR EN TRANSACCION','msg'=>'No fue posible validar el correo electrónico.','class'=>'error'];
+            }
+            else
+                $info = ['titulo'=>'ERROR EN TRANSACCION','msg'=>'Los parámetros enviados no son válidos.','class'=>'error'];
+
+            Session::flash('mensaje',$info);
+            return redirect(url('/admin/usuario/gestion'));
+        }
+
+        return view('modulos.administracion.usuario.gestion',get_defined_vars());
     }
 
     public function InitListar(Request $request)

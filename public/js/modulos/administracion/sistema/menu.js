@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('#tblModulos').DataTable({
+    $('#tblMenus').DataTable({
         responsive: true,
         searching: true,
         ordering: false,
@@ -9,8 +9,8 @@ $(document).ready(function () {
 });
 
 $(document).on('click','#btnNewElement',function () {
-    $('#frmModulo')[0].reset();
-    $('#mdlModulo').modal('show');
+    $('#frmMenu')[0].reset();
+    $('#mdlMenu').modal('show');
 });
 
 function accion(data, stat)
@@ -18,8 +18,8 @@ function accion(data, stat)
     var tipo = stat===0?'INACTIVAR':'ACTIVAR';
     $.confirm({
         icon: 'fa fa-question-circle',
-        title: tipo+' MÓDULO',
-        content: '¿Confirma que desea '+tipo+' el Módulo?',
+        title: tipo+' MENÚ',
+        content: '¿Confirma que desea '+tipo+' el Menú?',
         theme: 'modern',
         type: 'blue',
         typeAnimated: true,
@@ -33,7 +33,7 @@ function accion(data, stat)
                     var info  = {_token: token, data: data, stat: stat};
                     $.ajax({
                         type:'POST',
-                        url:'accionModulo',
+                        url:'accionMenu',
                         data: info,
                         beforeSend: function() {
                             midialog = $.dialog({
@@ -59,7 +59,6 @@ function accion(data, stat)
                             });
                         }, success: function(resp) {
                             midialog.close();
-                            console.log(resp);
                             var res = JSON.parse(resp);
                             if(res.ESTADO == 'OK')
                             {

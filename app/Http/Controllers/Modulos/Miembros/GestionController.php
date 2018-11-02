@@ -143,4 +143,30 @@ class GestionController extends MasterController
         return $html;
     }
 
+    public function InitBuscarPersona(Request $request)
+    {
+        $sugerencias = [];
+
+        $data   = $request->all();
+        $query  = $data['query'];
+
+        $Persona = new tb_persona();
+        $dataPersona = $Persona->GetPersonaByNombre($query);
+
+        if(isset($dataPersona)&&count($dataPersona)>0)
+        {
+            foreach ($dataPersona as $da)
+            {
+                $sugerencias[] = array(
+                    'value' => $da->nombre.' '.$da->apellido,
+                    'data'  => $da->id
+                );
+            }
+        }
+
+        return json_encode(array(
+            'query'         => $query,
+            'suggestions'   => $sugerencias
+        ));
+    }
 }
