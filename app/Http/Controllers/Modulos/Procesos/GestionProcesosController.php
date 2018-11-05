@@ -1,11 +1,11 @@
-<?php namespace App\Http\Controllers\Modulos\Eventos;
+<?php namespace App\Http\Controllers\Modulos\Procesos;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-class GestionController extends Controller {
+class GestionProcesosController extends Controller {
 
 	/**
 	 * Display a listing of the resource.

@@ -62,11 +62,6 @@ class tb_persona extends Model
 
     public function GetPersonaByNombre($cadena)
     {
-        /*return $this->where(function ($sql) use($cadena){
-            $sql->where(DB::raw('UPPER(nombre)'),'like','%'.$cadena.'%');
-            $sql->orWhere(DB::raw('UPPER(apellido)'),'like','%'.$cadena.'%');
-        })->select('id','nombre','apellido')->get();*/
-
         return DB::table('tb_persona as p')
             ->leftJoin('tb_usuario as u','u.id_persona','=','p.id')
             ->where(function ($sql) use($cadena){
@@ -74,6 +69,14 @@ class tb_persona extends Model
                 $sql->orWhere(DB::raw('UPPER(apellido)'),'like','%'.$cadena.'%');
             })->whereNull('u.id')
             ->select('p.id','p.nombre','p.apellido')->get();
+    }
+
+    public function GetPersonaByNombreFull($cadena)
+    {
+        return $this->where(function ($sql) use($cadena){
+            $sql->where(DB::raw('UPPER(nombre)'),'like','%'.$cadena.'%');
+            $sql->orWhere(DB::raw('UPPER(apellido)'),'like','%'.$cadena.'%');
+        })->select('id','nombre','apellido')->get();
     }
 
     public function GetDetalle($idPersona)

@@ -62,6 +62,20 @@ Route::group(['middleware' => ['sesion']], function () {
             Route::post('/listar','GestionController@InitListar');
 
             Route::get ('/buscar','GestionController@InitBuscarPersona');
+            Route::get ('/busquedaGeneral','GestionController@InitBusquedaGeneral');
+        });
+    });
+
+    Route::group(['prefix' => 'evento','namespace' => 'Modulos\Eventos'], function()
+    {
+        Route::group(['prefix' => 'gestion'], function()
+        {
+            Route::get ('/crear','GestionEventoController@InitCrearEvento');
+            Route::post('/crear','GestionEventoController@InitCrearEvento');
+            Route::post('/accionEvento','GestionEventoController@InitAccionEvento');
+
+            Route::get ('/registro','GestionEventoController@InitRegistroEvento');
+            Route::post('/registro','GestionEventoController@InitRegistroEvento');
         });
     });
 

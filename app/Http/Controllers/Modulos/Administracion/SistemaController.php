@@ -6,7 +6,6 @@ use App\Models\tb_aplicacion;
 use App\Models\tb_menu;
 use App\Models\tb_modulo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class SistemaController extends MasterController
@@ -239,15 +238,15 @@ class SistemaController extends MasterController
                 {
                     $arrayAplicacion = ['nombre'=>$nombre,'url'=>$url,'id_menu'=>$idMenu];
                     if($App->SetAplicacion($arrayAplicacion))
-                        $info = ['titulo'=>'TRANSACCION EXITOSA','msg'=>'El Menú '.$nombre.' fue almacenado correctamente.','class'=>'info'];
+                        $info = ['titulo'=>'TRANSACCION EXITOSA','msg'=>'La Aplicación '.$nombre.' fue almacenada correctamente.','class'=>'info'];
                     else
-                        $info = ['titulo'=>'ERROR EN TRANSACCION','msg'=>'No fue posible registrar el nuevo Menú.','class'=>'error'];
+                        $info = ['titulo'=>'ERROR EN TRANSACCION','msg'=>'No fue posible registrar la nueva Aplicación.','class'=>'error'];
                 }
                 else
-                    $info = ['titulo'=>'ERROR EN TRANSACCION','msg'=>'El nombre '.$nombre.' ya se encuentra registrado como Menú.','class'=>'error'];
+                    $info = ['titulo'=>'ERROR EN TRANSACCION','msg'=>'El nombre '.$nombre.' ya se encuentra registrado como Aplicación.','class'=>'error'];
             }
             else
-                $info = ['titulo'=>'ERROR EN TRANSACCION','msg'=>'No fue posible validar el nombre del Módulo.','class'=>'error'];
+                $info = ['titulo'=>'ERROR EN TRANSACCION','msg'=>'No fue posible validar el nombre de la Aplilcación.','class'=>'error'];
 
             Session::flash('mensaje',$info);
             return redirect(url('/admin/sistema/aplicacion'));

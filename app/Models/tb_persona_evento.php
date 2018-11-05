@@ -17,4 +17,18 @@ class tb_persona_evento extends Model
     {
         return $this->belongsTo('App\Models\tb_evento','id_evento','id');
     }
+
+    #METODOS
+    public function ValidaEvento($idPersona, $idEvento)
+    {
+        return $this->where('id_persona',$idPersona)
+            ->where('id_evento',$idEvento)
+            ->where('estado',1)
+            ->get();
+    }
+
+    public function SetEventoPersona($data)
+    {
+        return $this->insertGetId($data);
+    }
 }
