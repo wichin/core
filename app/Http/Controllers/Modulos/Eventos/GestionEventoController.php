@@ -6,7 +6,6 @@ use App\Models\tb_evento;
 use App\Models\tb_persona_evento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use PhpSpec\Loader\Transformer\TypeHintIndex;
 
 class GestionEventoController extends MasterController
 {

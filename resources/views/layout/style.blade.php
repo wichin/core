@@ -18,6 +18,8 @@
 @if(isset($isForm))
 {{-- librerias para formularios --}}
 {!! Html::style('vendors/bootstrap-daterangepicker/daterangepicker.css') !!}
+{!! Html::style('vendors/datetimepicker/build/css/bootstrap-datetimepicker.min.css') !!}
+{!! Html::style('vendors/select2/dist/css/select2.css') !!}
 @endif
 
 {!! Html::style('build/css/custom.css') !!}

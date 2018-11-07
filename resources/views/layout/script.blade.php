@@ -27,7 +27,11 @@
 @if(isset($isForm))
 {{-- librerias para formularios --}}
 {!! Html::script('vendors/moment/moment.js') !!}
+{!! Html::script('vendors/moment/locale/es.js') !!}
 {!! Html::script('vendors/bootstrap-daterangepicker/daterangepicker.js') !!}
+{!! Html::script('vendors/datetimepicker/build/js/bootstrap-datetimepicker.min.js') !!}
+{!! Html::script('vendors/select2/dist/js/select2.js') !!}
+{!! Html::script('vendors/select2/dist/js/i18n/es.js') !!}
 
 {!! Html::script('vendors/parsleyjs/dist/parsley.js') !!}
 {!! Html::script('vendors/parsleyjs/dist/i18n/es.js') !!}

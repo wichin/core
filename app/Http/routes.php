@@ -79,6 +79,26 @@ Route::group(['middleware' => ['sesion']], function () {
         });
     });
 
+    Route::group(['prefix' => 'procesos','namespace' => 'Modulos\Procesos'], function()
+    {
+        Route::group(['prefix' => 'gestion'], function()
+        {
+            Route::get ('/crear','GestionProcesosController@InitCrearProceso');
+            Route::post('/crear','GestionProcesosController@InitCrearProceso');
+            Route::post('/accionProceso','GestionProcesosController@InitAccionProceso');
+        });
+
+        Route::group(['prefix' => 'modulos'], function()
+        {
+            Route::get ('/crear','ModuloEducativoController@InitCrearModulo');
+            Route::post('/crear','ModuloEducativoController@InitCrearModulo');
+            Route::post('/accionModulo','GestionProcesosController@InitAccionProceso');
+
+            Route::get ('/listar','ModuloEducativoController@InitListarModulo');
+            Route::post('/listar','ModuloEducativoController@InitListarModulo');
+        });
+    });
+
     Route::group(['prefix' => 'elecciones','namespace' => 'Modulos\Elecciones'], function()
     {
         Route::group(['prefix' => 'votacion'], function()
