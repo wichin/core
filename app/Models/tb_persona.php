@@ -30,6 +30,16 @@ class tb_persona extends Model
         return $this->hasMany('App\Models\tb_usuario','id_persona','id');
     }
 
+    public function Instructor()
+    {
+        return $this->hasMany('App\Models\tb_instructor','id_persona','id');
+    }
+
+    public function Alumno()
+    {
+        return $this->hasMany('App\Models\tb_modulo_alumno','id_persona','id');
+    }
+
     public function Sexo()
     {
         return $this->belongsTo('App\Models\cat_sexo','id_sexo','id');
@@ -82,5 +92,16 @@ class tb_persona extends Model
     public function GetDetalle($idPersona)
     {
 
+    }
+
+    public function GetPersonaInstructor ($cadena)
+    {
+        return DB::table('tb_persona as p')
+            ->leftJoin('tb_instructor as i','i.id_persona','=','p.id')
+            ->where(function ($sql) use($cadena){
+                $sql->where(DB::raw('UPPER(nombre)'),'like','%'.$cadena.'%');
+                $sql->orWhere(DB::raw('UPPER(apellido)'),'like','%'.$cadena.'%');
+            })->whereNull('i.id')
+            ->select('p.id','p.nombre','p.apellido')->get();
     }
 }

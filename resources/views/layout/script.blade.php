@@ -35,6 +35,9 @@
 
 {!! Html::script('vendors/parsleyjs/dist/parsley.js') !!}
 {!! Html::script('vendors/parsleyjs/dist/i18n/es.js') !!}
+
+{!! Html::script('js/validator/dist/jquery.validate.js') !!}
+{!! Html::script('js/validator/dist/localization/messages_es.js') !!}
 @endif
 
 {!! Html::script('build/js/custom.js') !!}

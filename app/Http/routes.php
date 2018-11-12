@@ -63,6 +63,7 @@ Route::group(['middleware' => ['sesion']], function () {
 
             Route::get ('/buscar','GestionController@InitBuscarPersona');
             Route::get ('/busquedaGeneral','GestionController@InitBusquedaGeneral');
+            Route::get ('/busquedaInstructor','GestionController@InitBusquedaInstructor');
         });
     });
 
@@ -86,6 +87,10 @@ Route::group(['middleware' => ['sesion']], function () {
             Route::get ('/crear','GestionProcesosController@InitCrearProceso');
             Route::post('/crear','GestionProcesosController@InitCrearProceso');
             Route::post('/accionProceso','GestionProcesosController@InitAccionProceso');
+
+            Route::get ('/instructor','GestionProcesosController@InitAgregarInstructor');
+            Route::post('/instructor','GestionProcesosController@InitAgregarInstructor');
+            Route::post('/accionInstructor','GestionProcesosController@InitAccionInstructor');
         });
 
         Route::group(['prefix' => 'modulos'], function()
@@ -96,6 +101,15 @@ Route::group(['middleware' => ['sesion']], function () {
 
             Route::get ('/listar','ModuloEducativoController@InitListarModulo');
             Route::post('/listar','ModuloEducativoController@InitListarModulo');
+            Route::post('/estado','ModuloEducativoController@InitEstadoModulo');
+
+            Route::post('/buscarInstructores','ModuloEducativoController@InitBuscarInstructores');
+            Route::post('/agregarInstructores','ModuloEducativoController@InitAgregarInstructores');
+
+            Route::get ('/alumnos','ModuloEducativoController@InitListarAlumno');
+            Route::post('/alumnos','ModuloEducativoController@InitListarAlumno');
+            Route::post('/buscarModulo','ModuloEducativoController@InitBuscarModulo');
+            Route::post('/agregarAlumno','ModuloEducativoController@InitAgregarAlumno');
         });
     });
 
