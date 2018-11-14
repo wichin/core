@@ -40,4 +40,10 @@
 {!! Html::script('js/validator/dist/localization/messages_es.js') !!}
 @endif
 
+@if(isset($isChart))
+{{--librerias para gráficas--}}
+{!! Html::script('vendors/echarts/dist/echarts.js') !!}
+{!! Html::script('vendors/echarts/style.js') !!}
+@endif
+
 {!! Html::script('build/js/custom.js') !!}

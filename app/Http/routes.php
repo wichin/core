@@ -64,6 +64,8 @@ Route::group(['middleware' => ['sesion']], function () {
             Route::get ('/buscar','GestionController@InitBuscarPersona');
             Route::get ('/busquedaGeneral','GestionController@InitBusquedaGeneral');
             Route::get ('/busquedaInstructor','GestionController@InitBusquedaInstructor');
+
+            Route::get ('/estadisticas','GestionController@InitEstadisticas');
         });
     });
 
@@ -110,6 +112,8 @@ Route::group(['middleware' => ['sesion']], function () {
             Route::post('/alumnos','ModuloEducativoController@InitListarAlumno');
             Route::post('/buscarModulo','ModuloEducativoController@InitBuscarModulo');
             Route::post('/agregarAlumno','ModuloEducativoController@InitAgregarAlumno');
+            Route::post('/estadoAlumno','ModuloEducativoController@InitEstadoAlumno');
+            Route::post('/calificacion','ModuloEducativoController@InitCalificacion');
         });
     });
 

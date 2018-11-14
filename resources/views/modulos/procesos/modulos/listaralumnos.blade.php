@@ -133,6 +133,71 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="mdlNota">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="frmNota">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="_data" id="dataN">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">
+                            <i class="fa fa-check-square-o fa-lg"></i> &nbsp;ASIGNAR NOTA
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <h4 id="ttlAlumno"></h4>
+                            </div>
+                        </div>
+                        <hr style="padding: 5px !important; margin: 5px !important;">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label for="asistencia">Asistencia</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="asistencia" name="asistencia" min="0" max="100" required>
+                                        <div class="input-group-addon">%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label for="calificacion">Calificacion</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="calificacion" name="calificacion" min="0" max="100" required>
+                                        <div class="input-group-addon">Pts.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label for="observaciones">Observaciones</label>
+                                    <textarea class="form-control" name="observaciones" id="observaciones" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-11 col-sm-11 col-xs-11">
+                                <div class="form-group" style="text-align: right;">
+                                    Aprobado &nbsp;<input type="checkbox" name="estado" id="estado" checked>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('js')

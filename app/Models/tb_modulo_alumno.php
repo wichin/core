@@ -7,6 +7,7 @@ class tb_modulo_alumno extends Model
 {
     protected $table = 'tb_modulo_alumno';
     protected $primaryKey = 'id';
+    public $timestamps = false;
 
     public function Persona()
     {
@@ -32,6 +33,11 @@ class tb_modulo_alumno extends Model
     public function SetAlumno($data)
     {
         return $this->insertGetId($data);
+    }
+
+    public function UpdateAlumno($id, $data)
+    {
+        return $this->where('id',$id)->update($data);
     }
 
     public function GetByModulo($idModulo)

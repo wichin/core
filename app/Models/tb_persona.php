@@ -104,4 +104,20 @@ class tb_persona extends Model
             })->whereNull('i.id')
             ->select('p.id','p.nombre','p.apellido')->get();
     }
+
+    public function GetTotalByGrupo()
+    {
+        return DB::table('tb_persona as p')
+            ->join('cat_grupo as g','g.id','=','p.id_grupo')
+            ->select('g.descripcion',DB::raw('count(*) as total'))
+            ->groupBy('p.id_grupo')->get();
+    }
+
+    public function GetTotalBySexo()
+    {
+        return DB::table('tb_persona as p')
+            ->join('cat_sexo as s','s.id','=','p.id_sexo')
+            ->select('s.descripcion',DB::raw('count(*) as total'))
+            ->groupBy('p.id_sexo')->get();
+    }
 }

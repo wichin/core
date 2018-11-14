@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class tb_persona_evento extends Model
 {
@@ -30,5 +31,13 @@ class tb_persona_evento extends Model
     public function SetEventoPersona($data)
     {
         return $this->insertGetId($data);
+    }
+
+    public function GetTotalByEvento()
+    {
+        return DB::table('tb_persona_evento as pe')
+            ->join('tb_evento as e','e.id','=','pe.id_evento')
+            ->select('e.nombre',DB::raw('count(*) as total'))
+            ->groupBy('pe.id_evento')->get();
     }
 }

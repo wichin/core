@@ -260,6 +260,7 @@ class ModuloEducativoController extends MasterController
 
     public function TablaAlumnos($data)
     {
+        #dd(json_decode($data));
         $html = '<table class="table table-striped jambo_table" id="tblProcesos">';
         $html.= '<thead>';
         $html.= '<tr><th>ACCIONES</th><th>NOMBRE</th><th>ASISTENCIA</th><th>EVALUACION</th><th>ESTADO</th></tr>';
@@ -268,13 +269,21 @@ class ModuloEducativoController extends MasterController
         foreach ($data as $dt)
         {
             $id64 = base64_encode($dt->id);
+            $nom  = $dt->Persona->nombre.' '.$dt->Persona->apellido;
             $nm64 = base64_encode($dt->nombre);
             $stat = $dt->id_estado;
             $html.= '<tr>';
             $html.= '<td class="text-center text-nowrap">';
+            if($stat==1&&$dt->ModuloEducativo->id_estado==1)
+            {
+                $html.= $this->BtnHtml('accion(\''.$id64.'\',5,\'ANULAR\')','Anular alumno','times-circle').'&nbsp&nbsp&nbsp&nbsp';
+                $html.= $this->BtnHtml('accion(\''.$id64.'\',2,\'RETIRAR\')','Retirar alumno','sign-out').'&nbsp&nbsp&nbsp&nbsp';
+                $html.= $this->BtnHtml('nota(\''.$id64.'\',\''.$nom.'\')','Dar nota','check-square-o');
+            }
+            else
                 $html.= $this->BtnHtml(null,'No disponible','ban');
             $html.= '</td>';
-            $html.= '<td>'.$dt->Persona->nombre.' '.$dt->Persona->apellido.'</td>';
+            $html.= '<td>'.$nom.'</td>';
             $html.= '<td class="text-nowrap">'.$dt->asistencia.'</td>';
             $html.= '<td class="text-center">'.$dt->evaluacion.'</td>';
             $html.= '<td class="text-center">'.$dt->Estado->descripcion.'</td>';
@@ -344,6 +353,72 @@ class ModuloEducativoController extends MasterController
         }
         else
             $resp = ['ESTADO'=>'ERROR','MENSAJE'=>'Los parámetros enviados no son válidos para la búsqueda de Módulos Educativos'];
+
+        return json_encode($resp);
+    }
+
+    public function InitEstadoAlumno(Request $request)
+    {
+        $id64 = $request->data;
+        $stat = $request->stat;
+
+        if(isset($id64)&&isset($stat)&&$id64!=''&&$stat!='')
+        {
+            $ModuloA    = new tb_modulo_alumno();
+            $idAlumno   = base64_decode($id64);
+
+            $arrayAlumno = [
+                'id_estado'             => $stat,
+                'usuario_modificacion'  => $this->idUsuario,
+                'fecha_modificacion'    => Carbon::now()->format('Y-m-d H:i:s')
+            ];
+
+            if($ModuloA->UpdateAlumno($idAlumno, $arrayAlumno))
+            {
+                $resp = ['ESTADO'=>'OK','MENSAJE'=>'El estado del Alumno fue modificado exitosamente.'];
+                $info = ['titulo'=>'TRANSACCION EXITOSA','msg'=>'El estado del Alumno fue modificado.','class'=>'info'];
+                Session::flash('mensaje',$info);
+            }
+            else
+                $resp = ['ESTADO'=>'ERROR','MENSAJE'=>'No fue posible modificar el estado del Alumno.'];
+        }
+        else
+            $resp = ['ESTADO'=>'ERROR','MENSAJE'=>'Los parámetros enviados no son válidos'];
+
+        return json_encode($resp);
+    }
+
+    public function InitCalificacion(Request $request)
+    {
+        $valida         = $request->estado;
+        $estado         = isset($valida)?3:4;
+        $id64           = $request->_data;
+
+        if(isset($id64)&&$id64!='')
+        {
+            $ModuloA    = new tb_modulo_alumno();
+            $idAlumno   = base64_decode($id64);
+
+            $arrayAlumno = [
+                'asistencia'            => $request->asistencia,
+                'evaluacion'            => $request->calificacion,
+                'id_estado'             => $estado,
+                'observaciones'         => $request->observaciones,
+                'fecha_modificacion'    => Carbon::now()->format('Y-m-d H:i:s'),
+                'usuario_modificacion'  => $this->idUsuario
+            ];
+
+            if($ModuloA->UpdateAlumno($idAlumno, $arrayAlumno))
+            {
+                $resp = ['ESTADO'=>'OK','MENSAJE'=>'La calificación del Alumno fue registrada exitosamente.'];
+                $info = ['titulo'=>'TRANSACCION EXITOSA','msg'=>'La calificación del Alumno fue registrada exitosamente.','class'=>'info'];
+                Session::flash('mensaje',$info);
+            }
+            else
+                $resp = ['ESTADO'=>'ERROR','MENSAJE'=>'No fue posible registrar la calificación del Alumno.'];
+        }
+        else
+            $resp = ['ESTADO'=>'ERROR','MENSAJE'=>'Los parámetros envidos no son válidos'];
 
         return json_encode($resp);
     }

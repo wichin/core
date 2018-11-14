@@ -3,6 +3,7 @@
 use App\Http\Controllers\Modulos\MasterController;
 
 use App\Models\tb_persona;
+use App\Models\tb_persona_evento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -222,5 +223,58 @@ class GestionController extends MasterController
             'query'         => $query,
             'suggestions'   => $sugerencias
         ));
+    }
+
+    public function InitEstadisticas(Request $request)
+    {
+        $usuario        = $this->usuario;
+        $tituloPagina   = 'Estadísticas';
+        $titulo         = 'Estadísticas Generales';
+        $subtitulo      = '';
+
+        $isChart = true;
+
+        $Persona = new tb_persona();
+        $Evento  = new tb_persona_evento();
+
+        $dataGrupo  = $Persona->GetTotalByGrupo();
+        $dataSexo   = $Persona->GetTotalBySexo();
+        $dataEvento = $Evento->GetTotalByEvento();
+
+        $chartGrupo     = json_encode(isset($dataGrupo)&&count($dataGrupo)>0?$this->FormatPie($dataGrupo):[]);
+        $chartSexo      = json_encode(isset($dataGrupo)&&count($dataGrupo)>0?$this->FormatPie($dataSexo):[]);
+        $chartEvento    = json_encode(isset($dataEvento)&&count($dataEvento)>0?$this->FormatBar($dataEvento):[]);
+
+        return view('modulos.miembros.gestion.estadisticas',get_defined_vars());
+    }
+
+    public function FormatPie($data)
+    {
+        $titles = [];
+        $info   = [];
+
+        foreach ($data as $dt)
+        {
+            $titles[]   = $dt->descripcion;
+            $info[]     = ['value'=>$dt->total,'name'=>$dt->descripcion];
+        }
+
+        #dd($titles,$info);
+        return [$titles, $info];
+    }
+
+    public function FormatBar($data)
+    {
+        $titles = [];
+        $values = [];
+
+        foreach ($data as $dt)
+        {
+            $titles[] = $dt->nombre;
+            $values[] = $dt->total;
+        }
+
+        #dd($titles, $values);
+        return [$titles, $values];
     }
 }
