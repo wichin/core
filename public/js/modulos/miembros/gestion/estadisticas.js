@@ -2,11 +2,17 @@ $(document).ready(function () {
 
 });
 
-function echarPie(div, info)
+function echarPie(div, info,ttl)
 {
     var echartDonut = echarts.init(document.getElementById(div), theme);
 
     echartDonut.setOption({
+        title: {
+            textStyle: {
+                color:'#395067'
+            },
+            text: ttl
+        },
         tooltip: {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -17,6 +23,12 @@ function echarPie(div, info)
             y: 'bottom',
             /*data: ['Direct Access', 'E-mail Marketing', 'Union Ad', 'Video Ads', 'Search Engine']*/
             data: info[0]
+        },
+        grid: {
+            left: '1%',
+            right: '1%',
+            bottom: '2%',
+            containLabel: true
         },
         toolbox: {
             show: true,
@@ -33,20 +45,16 @@ function echarPie(div, info)
                         }
                     }
                 },
-                restore: {
-                    show: true,
-                    title: "Restore"
-                },
                 saveAsImage: {
                     show: true,
-                    title: "Save Image"
+                    title: "Descargar"
                 }
             }
         },
         series: [{
-            name: 'Access to the resource',
+            name: ttl,
             type: 'pie',
-            radius: ['30%', '55%'],
+            radius: ['40%', '65%'],
             itemStyle: {
                 normal: {
                     label: {
@@ -72,28 +80,37 @@ function echarPie(div, info)
     });
 }
 
-function echarHorizontalBar(div,info)
+function echarHorizontalBar(div,info,ttl)
 {
     var echartBar = echarts.init(document.getElementById(div), theme);
 
     echartBar.setOption({
         title: {
-            text: 'Bar Graph',
-            subtext: 'Graph subtitle'
+            textStyle: {
+                color:'#395067'
+            },
+            text: ttl
         },
         tooltip: {
             trigger: 'axis'
         },
         legend: {
+            show: false,
             x: 200,
             data: ['Evento']
+        },
+        grid: {
+            left: '1%',
+            right: '1%',
+            bottom: '2%',
+            containLabel: true
         },
         toolbox: {
             show: true,
             feature: {
                 saveAsImage: {
                     show: true,
-                    title: "Guardar imagen"
+                    title: "Descargar"
                 }
             }
         },

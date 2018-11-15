@@ -50,9 +50,9 @@
             var alto = evento[0].length*100+50;
             $('#echart-evento').css('height',alto);
 
-            echarPie('echart-grupo',grupo);
-            echarPie('echart-sexo',sexo);
-            echarHorizontalBar('echart-evento',evento);
+            echarPie('echart-grupo',grupo,'Grupos de Miembros');
+            echarPie('echart-sexo',sexo,'Miembros por género');
+            echarHorizontalBar('echart-evento',evento,'Eventos de miembros');
         });
     </script>
 
