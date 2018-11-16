@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class tb_modulo_educativo extends Model
 {
@@ -53,5 +54,13 @@ class tb_modulo_educativo extends Model
     public function UpdateModulo($id, $data)
     {
         return $this->where('id',$id)->update($data);
+    }
+
+    public function TotalByProceso()
+    {
+        return DB::table('tb_modulo_educativo as me')
+            ->join('tb_proceso as p','p.id','=','me.id_proceso')
+            ->select('p.nombre',DB::raw('count(*) as total'))
+            ->groupBy('me.id_proceso')->get();
     }
 }

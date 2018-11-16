@@ -120,10 +120,10 @@ class GestionController extends MasterController
             $html.= '<td class="text-center">';
             #$html.= $this->BtnHtml('permisos(\''.$id64.'\')','Permisos','key');
             $html.= (($dt->estado==1) ? $btnI : $btnA);
-            $html.= '&nbsp;'.$this->BtnHtml('actualizar(\''.$id64.'\',\''.$dt->nombre.'\')','Actualizar Información','refresh');
-            $html.= '&nbsp;'.$this->BtnHtml('ministerio(\''.$id64.'\')','Agregar Ministerio','home');
-            $html.= '&nbsp;'.$this->BtnHtml('proceso(\''.$id64.'\')','Agregar Proceso','cog');
-            $html.= '&nbsp;'.$this->BtnHtml('evento(\''.$id64.'\')','Agregar Evento','calendar-o');
+            $html.= '&nbsp;&nbsp;&nbsp;&nbsp;'.$this->BtnHtml('actualizar(\''.$id64.'\',\''.$dt->nombre.'\')','Actualizar Información','refresh');
+            #$html.= '&nbsp;'.$this->BtnHtml('ministerio(\''.$id64.'\')','Agregar Ministerio','home');
+            #$html.= '&nbsp;'.$this->BtnHtml('proceso(\''.$id64.'\')','Agregar Proceso','cog');
+            #$html.= '&nbsp;'.$this->BtnHtml('evento(\''.$id64.'\')','Agregar Evento','calendar-o');
             $html.= '</td>';
             $html.= '<td class="text-center">';
             $html.= $this->BtnHtml('detalle(\''.$id64.'\')','Información Personal','list-ul');

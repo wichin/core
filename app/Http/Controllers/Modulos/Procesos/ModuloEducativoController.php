@@ -422,4 +422,55 @@ class ModuloEducativoController extends MasterController
 
         return json_encode($resp);
     }
+
+    public function InitEstadisticas(Request $request)
+    {
+        $usuario        = $this->usuario;
+        $tituloPagina   = 'Estadísticas';
+        $titulo         = 'Estadísticas de Procesos';
+        $subtitulo      = '';
+
+        $isChart = true;
+
+        $ModuloA = new tb_modulo_alumno();
+        $ModuloE = new tb_modulo_educativo();
+        $dataModulo = $ModuloE->TotalByProceso();
+        $dataAlumno = $ModuloA->TotalByProceso();
+
+        $chartModulo = json_encode(isset($dataModulo)&&count($dataModulo)>0?$this->FormatPie($dataModulo):[]);
+        $chartAlumno = json_encode(isset($dataAlumno)&&count($dataAlumno)>0?$this->FormatBar($dataAlumno):[]);
+
+        return view('modulos.procesos.modulos.estadisticas',get_defined_vars());
+
+    }
+
+    public function FormatPie($data)
+    {
+        $titles = [];
+        $info   = [];
+
+        foreach ($data as $dt)
+        {
+            $titles[]   = $dt->nombre;
+            $info[]     = ['value'=>$dt->total,'name'=>$dt->nombre];
+        }
+
+        #dd($titles,$info);
+        return [$titles, $info];
+    }
+
+    public function FormatBar($data)
+    {
+        $titles = [];
+        $values = [];
+
+        foreach ($data as $dt)
+        {
+            $titles[] = $dt->nombre;
+            $values[] = $dt->total;
+        }
+
+        #dd($titles, $values);
+        return [$titles, $values];
+    }
 }

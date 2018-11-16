@@ -114,6 +114,8 @@ Route::group(['middleware' => ['sesion']], function () {
             Route::post('/agregarAlumno','ModuloEducativoController@InitAgregarAlumno');
             Route::post('/estadoAlumno','ModuloEducativoController@InitEstadoAlumno');
             Route::post('/calificacion','ModuloEducativoController@InitCalificacion');
+
+            Route::get ('/estadisticas','ModuloEducativoController@InitEstadisticas');
         });
     });
 

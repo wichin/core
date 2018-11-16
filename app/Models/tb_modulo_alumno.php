@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class tb_modulo_alumno extends Model
 {
@@ -47,6 +48,16 @@ class tb_modulo_alumno extends Model
                 $sql->select('id','nombre','apellido')->orderBy('apellido')->orderBy('nombre');
             }])->with('ModuloEducativo')
             ->get();
+    }
 
+    public function TotalByProceso()
+    {
+        return DB::table('tb_modulo_alumno as ma')
+            ->join('tb_modulo_educativo as m','m.id','=','ma.id_emodulo')
+            ->join('tb_proceso as p','p.id','=','m.id_proceso')
+            ->select('ma.id','p.nombre')
+            ->select('p.nombre',DB::raw('count(*) as total'))
+            ->groupBy('m.id_proceso')
+            ->get();
     }
 }
